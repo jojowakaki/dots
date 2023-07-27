@@ -1,6 +1,8 @@
 # dots
 Dot files
-Requirements
+
+##Requirements
+
 i3wm (with i3blocks and i3statusbar)
 picom
 dunst (notificatoin)
