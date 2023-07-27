@@ -5,7 +5,7 @@ Dot files
 
 1. i3wm (with i3blocks and i3statusbar)
 2. picom
-3. dunst (notificatoin)
+3. dunst (notification)
 4. rofi
 5. feh
 6. maim
@@ -14,6 +14,7 @@ Dot files
 9. vim
 10. qutebrowser
 11. zathura (pdf reader)
+12. yay (read .bashrc aliases, you can modify them to use pacman if not using yay)
 
 ## Steps
 1. Copy config vim and bashrc to $HOME
@@ -22,7 +23,7 @@ Dot files
 4. Go to .vim/Plugged/Youcompleteme and run install.py (python required of course) or ymcd doesn't work
 
 This doesnot cover gtk kvantum and qutebrowser themes and fonts, those need to be downloaded and applied separately
-- Fonts used: Iosevka nord, Mononki nerd and JetBrains Mono nerd
+- Fonts used: Iosevka nord, Mononoki nerd, and JetBrains Mono nerd
 - gtk-theme = nordic
 - icon theme = qogir-dark
 - cursor theem = Qogir
