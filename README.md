@@ -1,20 +1,20 @@
-# dots
+# Dots
 Dot files
 
-##Requirements
+## Requirements
 
-i3wm (with i3blocks and i3statusbar)
-picom
-dunst (notificatoin)
-rofi
-feh
-maim
-ranger
-vim
-qutebrowser
-zathura (pdf reader)
+1. i3wm (with i3blocks and i3statusbar)
+2. picom
+3. dunst (notificatoin)
+4. rofi
+5. feh
+6. maim
+7. ranger
+8. vim
+9. qutebrowser
+10. zathura (pdf reader)
 
-
+## Steps
 1. Copy config vim and bashrc to $HOME
 2. change the filename config vim bashrc to .config .vim and .bashrc
 3. On Vim run :PlugInstall
