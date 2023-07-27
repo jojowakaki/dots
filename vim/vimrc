@@ -1,0 +1,252 @@
+"General settings
+"
+""""""""""""""""""""""""""""""
+filetype plugin indent on
+syntax on
+set tw=108
+set mouse=a
+set ignorecase
+set incsearch
+set encoding=utf-8
+"set dir=~/tmp
+
+set backspace=indent,eol,start
+set shiftwidth=4 tabstop=4 softtabstop=4 expandtab autoindent smartindent
+
+colorscheme nord   "Color scheme
+""""""""""""""""""""""""""""""
+
+
+
+"Auto line numbers
+""""""""""""""""""""""""""""""
+set number
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+augroup END
+""""""""""""""""""""""""""""""
+
+
+
+"Plugins
+""""""""""""""""""""""""""""""
+call plug#begin()
+
+Plug 'SirVer/ultisnips' "snippets engine
+
+Plug 'honza/vim-snippets' "snippets
+
+ Plug 'ycm-core/YouCompleteMe' "fuzzy search and code complettion
+
+Plug 'lervag/vimtex' "Vim tex
+
+Plug 'townk/vim-autoclose' "auto brackets, quotesi
+
+Plug 'tpope/vim-surround' "change surrounding brackets
+
+Plug 'junegunn/vim-easy-align' "align gaip
+
+Plug 'itchyny/lightline.vim'    "lightiline
+
+Plug 'junegunn/fzf.vim'
+
+Plug 'anufrievroman/vim-angry-reviewer' "academic grammer review
+
+Plug 'frazrepo/vim-rainbow' "rainbow paranthesis
+
+Plug 'ledger/vim-ledger' "vim ledger
+
+call plug#end()
+"""""""""""""""""""""""""""""
+
+
+
+"Lightline
+"""""""""""""""""""""""""""""
+set laststatus=2
+set noshowmode
+
+let g:lightline = { 
+                \ 'colorscheme': 'nord',
+                \}
+"""""""""""""""""""""""""""""
+
+
+
+"Bindings
+"""""""""""""""""""""""""""""
+" map ctrl+backspace to delete last word
+"imap <C-BS> <C-w>
+noremap! <C-BS> <C-w>
+noremap! <C-h> <C-w>
+
+" ultisnips
+""""""""""""""""""""
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsEditSplit="vertical"
+
+
+" Vim Easy Align
+""""""""""""""""""""
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" Window Splits
+""""""""""""""""""""
+set splitbelow splitright
+
+" Remap splits navigation to just CTRL + hjkl
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Make adjusing split sizes a bit more friendly
+noremap <silent> <C-Left> :vertical resize +3<CR>
+noremap <silent> <C-Right> :vertical resize -3<CR>
+noremap <silent> <C-Up> :resize -3<CR>
+noremap <silent> <C-Down> :resize +3<CR>
+
+
+" Change 2 split windows from vert to horiz or horiz to vert
+map <Leader>th <C-w>t<C-w>H
+map <Leader>tk <C-w>t<C-w>K
+
+" Start terminals for R and Python sessions '\tr' or '\tp'
+"map <Leader>tp :new term://bash<CR>ipython3<CR><C-\><C-n><C-w>k
+map <Leader>tr :term<CR>R<CR>
+map <Leader>tp :term<CR>ipython<CR>
+
+" python alias 
+""""""""""""""""""""
+" ,p runs python on script. ,t times python script
+nmap ,p :w<CR>:!ipython -i %<CR>
+nmap ,P :w<CR>:!python -i %<CR>
+nmap ,t :w<CR>:!time python3 %<CR>
+""""""""""""""""""""""""""""""
+
+
+
+" YouCompleteme
+"""""""""""""""""""""""""""""
+ let g:ycm_semantic_triggers = {
+        \ 'tex'  : ['{']
+    \}
+
+ let g:ycm_semantic_triggers = {
+        \ 'markdown'  : ['@']
+    \}
+
+  let g:ycm_filetype_blacklist = {}
+ let g:ycm_filetype_whitelist = {
+        \ 'text': 1,
+        \ 'markdown': 1,
+        \ 'notes': 1,
+        \ 'tex': 1,
+        \}
+"Requires BibParser (pip)
+""""""""""""""""""""""""""""""
+
+
+"fzf related
+""""""""""""""""""""""""""""""
+
+"bibtex-ls
+""""""""""""""""""""
+let $FZF_BIBTEX_CACHEDIR='/home/pallav/.local/cache'
+let $FZF_BIBTEX_SOURCES='/home/pallav/work/docVault/collections/library.bib:/home/pallav/work/notebooks/papers/global.bib'
+
+function! s:bibtex_cite_sink(lines)
+    let r=system("bibtex-cite ", a:lines)
+    execute ':normal! a' . r
+endfunction
+
+function! s:bibtex_markdown_sink(lines)
+    let r=system("bibtex-markdown ", a:lines)
+    execute ':normal! a' . r
+endfunction
+
+nnoremap <silent> <leader>c :call fzf#run({
+                        \ 'source': 'bibtex-ls',
+                        \ 'sink*': function('<sid>bibtex_cite_sink'),
+                        \ 'up': '40%',
+                        \ 'options': '--ansi --layout=reverse-list --multi --prompt "Cite> "'})<CR>
+
+nnoremap <silent> <leader>m :call fzf#run({
+                        \ 'source': 'bibtex-ls',
+                        \ 'sink*': function('<sid>bibtex_markdown_sink'),
+                        \ 'up': '40%',
+                        \ 'options': '--ansi --layout=reverse-list --multi --prompt "Markdown> "'})<CR>
+
+
+""""""""""""""""""""""""""""""
+
+"Fix pumvisible on autoclose ()
+""""""""""""""""""""""""""""""
+let g:AutoClosePreserveDotReg = 0
+
+""""""""""""""""""""""""""""""
+
+
+"Angry Reviewer
+""""""""""""""""""""""""""""""
+let g:AngryReviewerEnglish='american' "'british'
+nnoremap <leader>ar :AngryReviewer<cr>
+
+" QUICK-FIX WINDOW
+nmap <silent> <leader>n  :cnext<cr>
+nmap <silent> <leader>p  :cprev<cr>
+nmap <silent> <leader>o  :copen<cr>
+nmap <silent> <leader>q  :cclose<cr>
+""""""""""""""""""""""""""""""
+
+
+" TOGGLE COMMENTS
+""""""""""""""""""""""""""""""
+autocmd FileType c,cpp,java,scala  let b:comment_leader = '//'
+autocmd FileType javascript        let b:comment_leader = '//'
+autocmd FileType solidity          let b:comment_leader = '//'
+autocmd FileType sh,ruby,python    let b:comment_leader = '#'
+autocmd FileType conf,fstab        let b:comment_leader = '#'
+autocmd FileType tex               let b:comment_leader = '%'
+autocmd FileType mail              let b:comment_leader = '>'
+autocmd FileType vim               let b:comment_leader = '"'
+function! CommentToggle()
+    execute ':silent! s/\([^ ]\)/' . escape(b:comment_leader,'\/') . ' \1/'
+    execute ':silent! s/^\( *\)' . escape(b:comment_leader,'\/') . ' \?' . escape(b:comment_leader,'\/') . ' \?/\1/'
+endfunction
+map gcc :call CommentToggle()<CR>
+""""""""""""""""""""""""""""""
+
+" RAINBOW PARANTHESIS
+""""""""""""""""""""""""""""""
+au FileType c,python call rainbow#load()
+let g:rainbow_ctermfgs = ['white', 'green', 'blue', 'red', 'magenta']
+""""""""""""""""""""""""""""""
+" https://gabri.me/blog/diy-vim-statusline "for diy statusline
+"
+" " CHANGE CURSOR DEPENDING ON THE MODE
+let &t_SI = "\e[5 q"
+let &t_EI = "\e[2 q"
+
+""Temp binds for tmc
+map <Leader>tt :!tmc test<CR>
+map <Leader>ts :!tmc submit<CR>
+
+" vim-ledger
+""""""""""""""""""""""""""""""
+let g:ledger_maxwidth = 80
+let g:ledger_fillstring = '    -'
+let g:ledger_detailed_first = 1
+let g:ledger_fold_blanks = 0
+
+autocmd FileType tex nnoremap <leader>cc :w<cr> :!pdflatex %:r.tex && bibtex %:r.aux && pdflatex %:r.tex && pdflatex %:r.tex && rm %:r.aux %:r.log %:r.blg %:r.bbl && notify-send -u low "LaTeX" "compilation is finished"<cr>
+map <leader>cm :w<cr> :!pandoc -s -f gfm -o %:r.pdf %:r.md --pdf-engine=xelatex -V geometry:margin=2cm<cr>
+            
