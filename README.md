@@ -9,10 +9,11 @@ Dot files
 4. rofi
 5. feh
 6. maim
-7. ranger
-8. vim
-9. qutebrowser
-10. zathura (pdf reader)
+7. xfce4-terminal
+8. ranger
+9. vim
+10. qutebrowser
+11. zathura (pdf reader)
 
 ## Steps
 1. Copy config vim and bashrc to $HOME
