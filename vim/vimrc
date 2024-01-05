@@ -211,8 +211,7 @@ let g:ycm_disable_signature_help = 1
 "bibtex-ls
 """"""""""""""""""""
 "let $FZF_BIBTEX_CACHEDIR='$HOME/.local/cache'
-"let $FZF_BIBTEX_SOURCES='$HOME/work/docVault/collections/library.bib:/home/pallav/work/notebooks/papers/global.bib'
-
+"let $FZF_BIBTEX_SOURCES='$HOME/work/docVault/collections/library.bib
 function! s:bibtex_cite_sink(lines)
     let r=system("bibtex-cite ", a:lines)
     execute ':normal! a' . r
