@@ -165,8 +165,8 @@ let g:tex_conceal='abdmg'
         " \ 'tex': 1,
         " \ 'python': 1,
         " \}
-let g:ycm_python_binary_path='/home/pallav/conda/bin/python'
-let g:ycm_python_interpreter_path='/home/pallav/conda/bin/python'
+" let g:ycm_python_binary_path='$HOME/conda/bin/python'
+" let g:ycm_python_interpreter_path='$HOME/conda/bin/python'
 let g:ycm_enable_semantic_highlighting=1
 let g:ycm_key_invoke_completion = '<C-Space>'
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -210,8 +210,8 @@ let g:ycm_disable_signature_help = 1
 
 "bibtex-ls
 """"""""""""""""""""
-let $FZF_BIBTEX_CACHEDIR='/home/pallav/.local/cache'
-let $FZF_BIBTEX_SOURCES='/home/pallav/work/docVault/collections/library.bib:/home/pallav/work/notebooks/papers/global.bib'
+"let $FZF_BIBTEX_CACHEDIR='$HOME/.local/cache'
+"let $FZF_BIBTEX_SOURCES='$HOME/work/docVault/collections/library.bib:/home/pallav/work/notebooks/papers/global.bib'
 
 function! s:bibtex_cite_sink(lines)
     let r=system("bibtex-cite ", a:lines)
