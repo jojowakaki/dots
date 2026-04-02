@@ -1,31 +1,61 @@
 #
 # ~/.bashrc
 #
-#Defaults
+##############
+#  Defaults  #
+##############
+
 export EDITOR=vim;
 export VISUAL=vim;
-export TERMINAL="xfce4-terminal"
-export BROWSER="qutebrowser"
+export BROWSER='/usr/bin/qutebrowser'
+export PATH="$HOME/Applications:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.config/scripts:$PATH"
+export PATH=$PATH:$(find $HOME/.config/scripts -type d) # subdirectories include
+export TERMINAL='xdg-terminal-exec'
+export FZF_COMPLETION_TRIGGER='**'
+export FZF_COMPLETION_OPTS="--preview 'fzf-preview.sh {}'"
 
 ################################################################################
 
-# ALiases for AppImage
+#############
+#  Aliases  #
+#############
 
-# Aliases
+alias rm='rm -i'
 alias nay='yay -Rns'
-alias purge='yay -Rs $(yay -Qqtd)'
+alias purge='yay -Rns $(yay -Qqtd)'
+alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
 alias v='vim'
-alias p='ipython'
 alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
-alias z='devour zathura'
-alias mpv='devour mpv'
+alias z='hide zathura'
 alias top='btop'
 alias htop='btop'
-alias t='xfce4-terminal'
+alias t='$TERMINAL &'
 alias showorphans='pacman -Qtdq'
 alias removeorphans='sudo pacman -Rns $(pacman -Qtdq)'
+alias clear="printf '\033[2J\033[3J\033[1;1H'"
+# alias ef='xdg-open'
+alias ef='_open_files_for_editing'     # 'ef' opens given file(s) for editing
+alias ytfzf='ytfzf -u umpv'
+alias mvi='mpv -profile image'
+alias img='swayimg'
+alias ff='fastfetch'
 
+## Niri dynamic cast
+alias dyncast-pick='niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | jq .id)'
+alias dyncast-window='niri msg action set-dynamic-cast-window'
+alias dyncast-monitor='niri msg action set-dynamic-cast-monitor'
+alias dyncast-clear='niri msg action clear-dynamic-cast-target'
 
+#############
+#  Sources  #
+#############
+
+source ~/.config/powerline.sh
+source ~/.config/scripts.sh
+
+################################################################################
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -42,8 +72,9 @@ alias removeorphans='sudo pacman -Rns $(pacman -Qtdq)'
 #    PS1='[\u@\h \W]\$ '
 #}
 
-source ~/.config/powerline.sh
+################################################################################
 
+################################################################################
 alias ls='ls --color=auto'
 alias ll='ls -lavh --ignore=..'   # show long listing of all except ".."
 alias l='ls -lavh --ignore=.?*'   # show long listing but no hidden dotfiles except "."
@@ -84,47 +115,25 @@ _open_files_for_editing() {
 }
 
 
+
 ################################################################################
+neofetch() {
+    # Define the list of arguments
+    local args=("tree" "oni" "trollface" "trollface_alt" "witcher" "witcher_small" "darkos")
 
-# ctrl+t fzf
-__fzf_select__() {
-  local cmd opts
-  cmd="${FZF_CTRL_T_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
-    -o -type f -print \
-    -o -type d -print \
-    -o -type l -print 2> /dev/null | cut -b3-"}"
-  opts="--height ${FZF_TMUX_HEIGHT:-40%} --bind=ctrl-z:ignore --reverse ${FZF_DEFAULT_OPTS-} ${FZF_CTRL_T_OPTS-} -m"
-  eval "$cmd" |
-    FZF_DEFAULT_OPTS="$opts" $(__fzfcmd) "$@" |
-    while read -r item; do
-      printf '%q ' "$item"  # escape special chars
-    done
+    # Get a random index
+    local random_index=$(( RANDOM % ${#args[@]} ))
+
+    # Call neofetch with the random argument
+    command neofetch --ascii_distro "${args[$random_index]}"
 }
 
-#if [[ $- =~ i ]]; then
-
-__fzfcmd() {
-  [[ -n "${TMUX_PANE-}" ]] && { [[ "${FZF_TMUX:-0}" != 0 ]] || [[ -n "${FZF_TMUX_OPTS-}" ]]; } &&
-    echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-40%}} -- " || echo "fzf"
-}
-
-fzf-file-widget() {
-  local selected="$(__fzf_select__ "$@")"
-  READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$selected${READLINE_LINE:$READLINE_POINT}"
-  READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
-}
-
-__fzf_cd__() {
-  local cmd opts dir
-  cmd="${FZF_ALT_C_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
-    -o -type d -print 2> /dev/null | cut -b3-"}"
-  opts="--height ${FZF_TMUX_HEIGHT:-40%} --bind=ctrl-z:ignore --reverse ${FZF_DEFAULT_OPTS-} ${FZF_ALT_C_OPTS-} +m"
-  dir=$(eval "$cmd" | FZF_DEFAULT_OPTS="$opts" $(__fzfcmd)) && printf 'builtin cd -- %q' "$dir"
-}
-
-  bind -m emacs-standard -x '"\C-t": fzf-file-widget'
-#  bind -m vi-command -x '"\C-t": fzf-file-widget'
-#  bind -m vi-insert -x '"\C-t": fzf-file-widget'
-#fi
 ################################################################################
+#######################################################################
+#                             Completions                             #
+#######################################################################
 
+# pipx completions
+eval "$(register-python-argcomplete pipx)"
+
+source ~/.config/bash/git-completion.bash
