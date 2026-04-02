@@ -129,8 +129,7 @@ spawn-at-startup "dunst"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 // spawn-at-startup "xwayland-satellite"
 spawn-sh-at-startup "~/.config/niri/scripts/refresh.sh"
-spawn-sh-at-startup "~/.config/scripts/left-screen"
-spawn-sh-at-startup "swayidle -w timeout 300 'swaylock -f -i ~/.config/dogagawa1080.png' timeout 600 'niri msg action power-off-monitors' timeout 900 'systemctl suspend-then-hibernate' before-sleep 'swaylock -f -i ~/.config/dogagawa1080.png'"
+spawn-sh-at-startup "swayidle -w timeout 300 'swaylock -f' timeout 600 'niri msg action power-off-monitors' timeout 900 'systemctl suspend-then-hibernate' before-sleep 'swaylock -f'"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -313,7 +312,6 @@ binds {
     Mod+m hotkey-overlay-title="File Manager: Nautilus" {spawn-sh "/usr/sbin/thunar";}
     Mod+Shift+Escape allow-inhibiting=false hotkey-overlay-title="Lock the Screen: swaylock" { spawn-sh "swaylock -f -i ~/.config/dogagawa1080.png"; }
     Mod+Shift+R hotkey-overlay-title="Refresh" {spawn-sh "~/.config/niri/scripts/refresh.sh";}
-    Mod+p hotkey-overlay-title="Switch audio ports" {spawn-sh "~/.config/scripts/switch-audio-port";}
     CTRL+grave {spawn-sh "rofi -show window -no-fixed-num-lines -theme-str 'window {width:60%;}' -theme ~/.config/rofi/themes/nord.rasi";}
 
        // Mod+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
@@ -459,7 +457,6 @@ binds {
     Mod+Shift+Space { switch-focus-between-floating-and-tiling; }
 
     Mod+W { toggle-column-tabbed-display; }
-    // Mod+Shift+V { spawn-sh "~/.config/scripts/keecli";} //Maintainence mode
 
 
     Mod+V       { switch-layout "next"; }
