@@ -15,6 +15,7 @@ Dot files
 10. qutebrowser
 11. zathura (pdf reader)
 12. yay (read .bashrc aliases, you can modify them to use pacman if not using yay)
+13. read config/niri/requirements.md for additinal requirements.
 
 ## Steps
 1. Copy config vim and bashrc to $HOME
@@ -29,5 +30,5 @@ This doesnot cover gtk kvantum and qutebrowser themes and fonts, those need to b
 - cursor theem = Qogir
 - kvantum theme = nordic
 
-optionally requires, kvantum, qt6ct and lxappearance
+Optionally requires, kvantum, qt6ct and lxappearance
 included rofi-bluetooth which can access bluetooth function from rofi. Optionally create a .dekstop file for it, however it works as scripts are callable.
