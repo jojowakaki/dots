@@ -1,2 +1,2 @@
-auto-online=false
-
+TerminalEmulator=xdg-terminal-exec
+TerminalEmulatorDismissed=true
