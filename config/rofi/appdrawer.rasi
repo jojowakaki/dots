@@ -1,0 +1,11 @@
+configuration {
+    modes: [drun];
+    drun-display-format: "{name}";
+    matching: "fuzzy";
+    sort: true;
+    sorting-method: "fzf";
+    icon-theme: "Qogir-Dark";
+    display-drun: " ";
+}
+
+@theme "themes/appdrawer_theme.rasi"   
