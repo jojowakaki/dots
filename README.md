@@ -3,15 +3,15 @@ Dot files
 
 ## Requirements
 
-1. i3wm (with i3blocks and i3statusbar)
-2. picom
+1. niri
+2. waybar
 3. dunst (notification)
 4. rofi
-5. feh
-6. maim
-7. xfce4-terminal
-8. ranger
-9. vim
+5. swayimg
+6. foot terminal
+7. ranger
+8. vim
+9. mpv
 10. qutebrowser
 11. zathura (pdf reader)
 12. yay (read .bashrc aliases, you can modify them to use pacman if not using yay)
@@ -30,3 +30,4 @@ This doesnot cover gtk kvantum and qutebrowser themes and fonts, those need to b
 - kvantum theme = nordic
 
 optionally requires, kvantum, qt6ct and lxappearance
+included rofi-bluetooth which can access bluetooth function from rofi. Optionally create a .dekstop file for it, however it works as scripts are callable.
