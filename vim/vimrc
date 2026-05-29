@@ -20,6 +20,12 @@ set autowriteall          " write current buffer when moving buffers
 set clipboard=unnamedplus
 syntax enable             " enable syntax highlighting
 
+let g:bkgrn = "dark"
+colorscheme nord          " set colorscheme
+
+let &background = g:bkgrn
+hi Normal guibg=NONE ctermbg=NONE
+
 set dir=/tmp
 set backupdir=~/.cache/vim/backup
 set autochdir "change pwd to the directory of the current file, sometimes it breaks then use lcd %:p:h
@@ -42,11 +48,8 @@ if (has("termguicolors"))
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   endif
   set termguicolors
-  set background=dark
+  set &background=g:bkgrn
 endif
-
-colorscheme nord          " set colorscheme
-hi Normal guibg=NONE ctermbg=NONE
 
 "Auto line numbers
 """"""""""""""""""""""""""""""
@@ -81,7 +84,7 @@ Plug 'honza/vim-snippets'  "sinppets
 Plug 'tpope/vim-commentary'  " commenting - gc, gcc, gcap
 Plug 'junegunn/vim-easy-align' "align gaip
 Plug 'junegunn/goyo.vim' "minimalism mode for focused writing
-Plug 'junegunn/limelight.vim' "focused writing, grayscale, goes together with goyo
+" Plug 'junegunn/limelight.vim' "focused writing, grayscale, goes together with goyo 
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive' "git stuff
 Plug 'tpope/vim-git' "runtime for git
@@ -528,8 +531,8 @@ let g:pandoc#modules#enabled = ["bibliographies", "completion"]
 " Goyo and Limelight for focused writing
 """""""""""""""""""""""""""""""""""""""""""""
 " Integration of limelight with goyo
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
+" autocmd! User GoyoEnter Limelight " doesn't support default colorscheme. Needs reimplementation
+" autocmd! User GoyoLeave Limelight!
 
 let g:goyo_width=110 "defualt goyo width
 
