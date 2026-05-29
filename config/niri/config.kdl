@@ -6,12 +6,8 @@ environment{
     QT_QPA_PLATFORMTHEME "qt5ct"
     QT_QPA_PLATFORMTHEME_QT6 "kvantum"
     ELECTRON_OZONE_PLATFORM_HINT "auto"
-    GTK_THEME "nordic-blue"
     GTK_FONT_NAME "Iosevka Nerd Font 12"
-    GTK_ICON_THEME "Qogir-Dark"
-    GTK_CURSOR_THEME "Qogir-Dark"
     GTK_CURSOR_THEME_SIZE "16"
-    GTK_APPLICATION_PREFER_DARK_THEME "1"
 }
 
 cursor {
@@ -114,6 +110,7 @@ overview {
     zoom 0.5
     backdrop-color "#4c566a90"
 
+
     workspace-shadow {
         // off
         softness 40
@@ -128,8 +125,9 @@ spawn-at-startup "dunst"
 // spawn-at-startup "nm-applet"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 // spawn-at-startup "xwayland-satellite"
-spawn-sh-at-startup "~/.config/niri/scripts/refresh.sh"
-spawn-sh-at-startup "swayidle -w timeout 300 'swaylock -f -i ~/.config/wallpaper/arch.png' timeout 600 'niri msg action power-off-monitors' timeout 900 'systemctl suspend-then-hibernate' before-sleep 'swaylock -f -i ~/.config/wallpaper/arch.png'"
+spawn-sh-at-startup "~/.config/niri/scripts/start.sh"
+spawn-sh-at-startup "~/.config/scripts/left-screen"
+spawn-sh-at-startup "swayidle -w timeout 300 'swaylock -f -i ~/.config/dogagawa1080.png' timeout 600 'niri msg action power-off-monitors' timeout 900 'systemctl suspend-then-hibernate' before-sleep 'swaylock -f -i ~/.config/dogagawa1080.png'"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -156,22 +154,18 @@ window-rule {
     match app-id=r#"^org\.pulseaudio\.pavucontrol"#
     match app-id="qutebrowser" title="Whoops!"
     match app-id="zoom" //title="Presenter layout"
-    match app-id="KeePassXC"
-    match title="(?i)reminder"
     match app-id="ibus-ui-emojier"
-    match app-id=r#"(?i)thunderbird"#
-    exclude title=".*Thunderbird"
+    match title="^(?i)about"
+    match title="^(?i)preferences"
+    match title="^(?i)config"
+    match title="(?i)reminder"
     match app-id="unknown" title=""
-    match app-id=r#"librewolf"#
-    exclude title="^.*LibreWolf"
     match app-id=r#"(?i)ardour"#
     exclude title="^.*Ardour"
     match app-id=r#"guitarix"#
     exclude title="^.*gx_head"
     match app-id="nm-connection-editor"
-    match app-id=r#"-config"#
-    match app-id=r#"(?i)thunar"#
-    exclude title=r#"Thunar"#
+
     open-floating true
 }
 
@@ -210,6 +204,10 @@ window-rule{
     match app-id="swayimg"
     match app-id="zathura"
     // opacity 0.95
+
+    background-effect {
+        blur true
+    }
 }
 
 layer-rule {
@@ -217,8 +215,8 @@ layer-rule {
     match at-startup=true
     place-within-backdrop true
 
-    //   opacity 0.9
-    // block-out-from "screen-capture"
+      opacity 0.9999
+    // block-out-from "screen-capture"Should I keep screenshots and evidence of everything?
 
     shadow {
         off
@@ -232,6 +230,33 @@ layer-rule {
     match namespace="^wallpaper$"
     place-within-backdrop true
 }
+
+window-rule {
+    match app-id=".*"
+        
+    popups {
+        // Matches the default libadwaita pop-up corner radius.
+        geometry-corner-radius 12
+
+        // Note: it'll look better to set background opacity
+        // through your GTK theme CSS and not here.
+        // This is just an example that makes it look obvious.
+        opacity 0.7
+
+        background-effect {
+            blur true
+        }
+    }
+}
+
+layer-rule {
+    match namespace="rofi"
+
+        background-effect{
+            blur true
+            xray false
+        }
+    }
 
 window-rule {
     match is-window-cast-target=true
@@ -312,7 +337,8 @@ binds {
     Mod+m hotkey-overlay-title="File Manager: Nautilus" {spawn-sh "/usr/sbin/thunar";}
     Mod+Shift+Escape allow-inhibiting=false hotkey-overlay-title="Lock the Screen: swaylock" { spawn-sh "swaylock -f -i ~/.config/dogagawa1080.png"; }
     Mod+Shift+R hotkey-overlay-title="Refresh" {spawn-sh "~/.config/niri/scripts/refresh.sh";}
-    CTRL+grave {spawn-sh "rofi -show window -no-fixed-num-lines -theme-str 'window {width:60%;}' -theme ~/.config/rofi/themes/nord.rasi";}
+    Mod+p hotkey-overlay-title="Switch audio ports" {spawn-sh "~/.config/scripts/switch-audio-port";}
+    CTRL+grave {spawn-sh "rofi -show window -theme-str 'window {width:60%;}' -theme ~/.config/rofi/themes/nord.rasi";}
 
        // Mod+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
     Mod+x hotkey-overlay-title="Restart xwayland-satellite" {spawn-sh "killall xwayland-satellite; xwayland-satellite";}
@@ -457,7 +483,6 @@ binds {
     Mod+Shift+Space { switch-focus-between-floating-and-tiling; }
 
     Mod+W { toggle-column-tabbed-display; }
-
 
     Mod+V       { switch-layout "next"; }
     // Mod+Shift+V { switch-layout "prev"; }
