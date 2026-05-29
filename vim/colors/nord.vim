@@ -12,27 +12,52 @@ if version > 580
   endif
 endif
 
+
 let g:colors_name = "nord"
 let s:nord_vim_version="0.19.0"
-set background=dark
+let background = &background
 
-let s:nord0_gui = "#2E3440"
-let s:nord1_gui = "#3B4252"
-let s:nord2_gui = "#434C5E"
-let s:nord3_gui = "#4C566A"
-let s:nord3_gui_bright = "#616E88"
-let s:nord4_gui = "#D8DEE9"
-let s:nord5_gui = "#E5E9F0"
-let s:nord6_gui = "#ECEFF4"
-let s:nord7_gui = "#8FBCBB"
-let s:nord8_gui = "#88C0D0"
-let s:nord9_gui = "#81A1C1"
-let s:nord10_gui = "#5E81AC"
-let s:nord11_gui = "#BF616A"
-let s:nord12_gui = "#D08770"
-let s:nord13_gui = "#EBCB8B"
-let s:nord14_gui = "#A3BE8C"
-let s:nord15_gui = "#B48EAD"
+if &background =="light"
+    let s:nord0_gui = "#FFFFFF"
+    let s:nord1_gui = "#ECEFF4"
+    let s:nord2_gui = "#E5E9F0"
+    let s:nord3_gui = "#D8DEE9"
+    let s:nord3_gui_bright = "#616E88"
+    let s:nord4_gui = "#434C5E"
+    let s:nord5_gui = "#3B4252"
+    let s:nord6_gui = "#2E3440"
+    let s:nord7_gui = "#8FBCBB"
+    let s:nord8_gui = "#4C566A"
+    let s:nord9_gui = "#81A1C1"
+    let s:nord10_gui = "#5E81AC"
+    let s:nord11_gui = "#BF616A"
+    let s:nord12_gui = "#D08770"
+    let s:nord13_gui = "#EBCB8B"
+    let s:nord14_gui = "#A3BE8C"
+    let s:nord15_gui = "#B48EAD"
+else
+    let s:nord0_gui = "#2E3440"
+    let s:nord1_gui = "#3B4252"
+    let s:nord2_gui = "#434C5E"
+    let s:nord3_gui = "#4C566A"
+    let s:nord3_gui_bright = "#616E88"
+    let s:nord4_gui = "#D8DEE9"
+    let s:nord5_gui = "#E5E9F0"
+    let s:nord6_gui = "#ECEFF4"
+    let s:nord7_gui = "#8FBCBB"
+    let s:nord8_gui = "#88C0D0"
+    let s:nord9_gui = "#81A1C1"
+    let s:nord10_gui = "#5E81AC"
+    let s:nord11_gui = "#BF616A"
+    let s:nord12_gui = "#D08770"
+    let s:nord13_gui = "#EBCB8B"
+    let s:nord14_gui = "#A3BE8C"
+    let s:nord15_gui = "#B48EAD"
+endif
+
+
+
+
 
 let s:nord1_term = "0"
 let s:nord3_term = "8"
@@ -150,7 +175,7 @@ call s:hi("SpellBad", s:nord11_gui, s:nord0_gui, s:nord11_term, "NONE", "undercu
 call s:hi("SpellCap", s:nord13_gui, s:nord0_gui, s:nord13_term, "NONE", "undercurl", s:nord13_gui)
 call s:hi("SpellLocal", s:nord5_gui, s:nord0_gui, s:nord5_term, "NONE", "undercurl", s:nord5_gui)
 call s:hi("SpellRare", s:nord6_gui, s:nord0_gui, s:nord6_term, "NONE", "undercurl", s:nord6_gui)
-call s:hi("Visual", "", s:nord2_gui, "", s:nord1_term, "", "")
+call s:hi("Visual", "NONE", s:nord2_gui, "NONE", s:nord1_term, "", "")
 call s:hi("VisualNOS", "", s:nord2_gui, "", s:nord1_term, "", "")
 
 "+- Vim 8 Terminal Colors -+
@@ -386,10 +411,21 @@ hi! link diffAdded DiffAdd
 hi! link diffChanged DiffChange
 hi! link diffRemoved DiffDelete
 
+call s:hi("elixirModuleDeclaration", s:nord7_gui, "", s:nord7_term, "", "", "")
+call s:hi("elixirAlias", s:nord7_gui, "", s:nord7_term, "", "", "")
+call s:hi("elixirAtom", s:nord6_gui, "", s:nord6_term, "", s:bold, "")
+
+call s:hi("gitconfigVariable", s:nord7_gui, "", s:nord7_term, "", "", "")
+
+
 call s:hi("gitconfigVariable", s:nord7_gui, "", s:nord7_term, "", "", "")
 
 call s:hi("goBuiltins", s:nord7_gui, "", s:nord7_term, "", "", "")
 hi! link goConstants Keyword
+
+" fatih/vim-go
+call s:hi("gomodVersion", s:nord7_gui, "", s:nord7_term, "", "", "")
+call s:hi("gomodGoVersion", s:nord8_gui, "", s:nord8_term, "", "", "")
 
 call s:hi("helpBar", s:nord3_gui, "", s:nord3_term, "", "", "")
 call s:hi("helpHyperTextJump", s:nord8_gui, "", s:nord8_term, "", s:underline, "")
